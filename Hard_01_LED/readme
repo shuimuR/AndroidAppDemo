@@ -1,0 +1,4 @@
+1. 编译命令
+arm-linux-gcc -I /usr/lib/jvm/java-1.7.0-openjdk-amd64/include/ -I /usr/lib/jvm/java-1.7.0-openjdk-amd64/include/linux -fPIC -shared nativa.c -o libHardControl.so -nostdlib ~/more/Android/Source/Android-5.0.2/android-5.0.2/prebuilts/ndk/9/platforms/android-19/arch-arm/usr/lib/libc.so
+2. 加入printlog后
+arm-linux-gcc -I /usr/lib/jvm/java-1.7.0-openjdk-amd64/include/ -I /usr/lib/jvm/java-1.7.0-openjdk-amd64/include/linux -I ~/more/Android/Source/Android-5.0.2/android-5.0.2/prebuilts/ndk/9/platforms/android-19/arch-arm/usr/include/ -fPIC -shared nativa.c -o libHardControl.so -nostdlib ~/more/Android/Source/Android-5.0.2/android-5.0.2/prebuilts/ndk/9/platforms/android-19/arch-arm/usr/lib/libc.so

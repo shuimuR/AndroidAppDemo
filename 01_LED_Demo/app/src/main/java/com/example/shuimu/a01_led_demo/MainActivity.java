@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
+import com.example.shuimu.HardLib.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     {
         public void onClick(View view)
         {
+            HardControl hardControl = new HardControl();
+
             AllLEDOn = !AllLEDOn;
             if(AllLEDOn)
             {
@@ -29,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
                 checkLED2.setChecked(true);
                 checkLED3.setChecked(true);
                 checkLED4.setChecked(true);
+
+                int i = 0;
+                for(i = 0; i < 4; i++)
+                    HardControl.LEDControl(i, 1);
             }
             else
             {
@@ -37,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
                 checkLED2.setChecked(false);
                 checkLED3.setChecked(false);
                 checkLED4.setChecked(false);
+
+                int i = 0;
+                for(i = 0; i < 4; i++)
+                    HardControl.LEDControl(i, 0);
             }
         }
     }
@@ -45,31 +56,54 @@ public class MainActivity extends AppCompatActivity {
     {
         boolean checked = ((CheckBox) view).isChecked();
 
-        switch(view.getId())
-        {
+        switch(view.getId()) {
             case R.id.LED1:
-                if(checked)
-                    Toast.makeText(getApplicationContext(), "LED1 on",Toast.LENGTH_SHORT).show();
+                if (checked)
+                {
+                    HardControl.LEDControl(0, 1);
+                    Toast.makeText(getApplicationContext(), "LED1 on", Toast.LENGTH_SHORT).show();
+                }
                 else
+                {
+                    HardControl.LEDControl(0, 0);
                     Toast.makeText(getApplicationContext(), "LED1 off",Toast.LENGTH_SHORT).show();;
+                }
                 break;
             case R.id.LED2:
-                if(checked)
-                    Toast.makeText(getApplicationContext(), "LED2 on",Toast.LENGTH_SHORT).show();
+                if (checked)
+                {
+                    HardControl.LEDControl(1, 1);
+                    Toast.makeText(getApplicationContext(), "LED2 on", Toast.LENGTH_SHORT).show();
+                }
                 else
+                {
+                    HardControl.LEDControl(1, 0);
                     Toast.makeText(getApplicationContext(), "LED2 off",Toast.LENGTH_SHORT).show();;
+                }
                 break;
             case R.id.LED3:
-                if(checked)
-                    Toast.makeText(getApplicationContext(), "LED3 on",Toast.LENGTH_SHORT).show();
+                if (checked)
+                {
+                    HardControl.LEDControl(2, 1);
+                    Toast.makeText(getApplicationContext(), "LED3 on", Toast.LENGTH_SHORT).show();
+                }
                 else
+                {
+                    HardControl.LEDControl(2, 0);
                     Toast.makeText(getApplicationContext(), "LED3 off",Toast.LENGTH_SHORT).show();;
+                }
                 break;
             case R.id.LED4:
-                if(checked)
-                    Toast.makeText(getApplicationContext(), "LED4 on",Toast.LENGTH_SHORT).show();
+                if (checked)
+                {
+                    HardControl.LEDControl(3, 1);
+                    Toast.makeText(getApplicationContext(), "LED4 on", Toast.LENGTH_SHORT).show();
+                }
                 else
+                {
+                    HardControl.LEDControl(3, 0);
                     Toast.makeText(getApplicationContext(), "LED4 off",Toast.LENGTH_SHORT).show();;
+                }
                 break;
         }
     }
@@ -79,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        HardControl.LEDOpen();
 
         button = (Button)findViewById(R.id.BUTTON);
         checkLED1 = (CheckBox) findViewById(R.id.LED1);
