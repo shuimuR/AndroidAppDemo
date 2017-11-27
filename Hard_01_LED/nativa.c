@@ -3,22 +3,35 @@
 #include <jni.h>			///usr/lib/jvm/java-1.8.0-openjdk-amd64/include/
 #include <android/log.h>
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+
+static jint fd;
 
 jint c_LEDOpen(JNIEnv *env, jobject cls)
 {
-	__android_log_print(ANDROID_LOG_DEBUG, "LEDDemo", "native led open...");
+	fd = open("/dev/leds", O_RDWR);
+//	__android_log_print(ANDROID_LOG_DEBUG, "LEDDemo", "native led open: %d", fd);
+	if(fd >= 0)
+		return 0;
+	else 
+		return -1;
 	return 0;
 }
 
 void c_LEDClose(JNIEnv *env, jobject cls)
 {
-	__android_log_print(ANDROID_LOG_DEBUG, "LEDDemo", "native led close...");
+//	__android_log_print(ANDROID_LOG_DEBUG, "LEDDemo", "native led close...");
+	close(fd);
 }
 
 jint c_LEDControl(JNIEnv *env, jobject cls, jint which, jint Status)
 {
-	__android_log_print(ANDROID_LOG_DEBUG, "LEDDemo", "native led control %d %d", which, Status);
-	return 0;
+	int ret = ioctl(fd, Status, which);
+//	__android_log_print(ANDROID_LOG_DEBUG, "LEDDemo", "native led control %d %d", which, Status);
+	return ret;
 }
 
 static const JNINativeMethod methods[] = 
